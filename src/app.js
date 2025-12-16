@@ -1,20 +1,26 @@
 const express = require("express");
 const app = express();
 
-app.get("/user",(req,res)=>{
-   res.send({firstName:"yaswanth",lastName:"Palloli"})
-})
-app.post("/user",(req,res)=>{
-    res.send("user created successfully");
- })
- app.delete("/user",(req,res)=>{
-    res.send("user deleted successfully");
- })
-app.use("/test", (req,res)=>{
-    res.send("hello from test");
-})
+app.use("/user",(req,res,next)=>{
+    console.log("1st routeHandler");
+    next();
+},
+[(req,res,next)=>{
+    console.log("2nd routeHandler");
+    next();
+},
+(req,res,next)=>{
+    console.log("3rd routrHandler");
+    next();
+}],
+(req,res,next)=>{
+    console.log("4th routeHandler");
+    res.send("4th responce");
+}
+)
+
 
 
 app.listen(7777,()=>{
-    console.log("server is running on port 7777")
-})
+    console.log("server is running on port 7777");
+});
