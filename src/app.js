@@ -2,24 +2,24 @@ const express = require("express");
 const {adminAuth,userAuth} = require("./middleWares/auth")
 const app = express();
 
-app.use("/admin",adminAuth);
-
-app.get("/admin/alldata",(req,res,next)=>{
-    res.send("all admin data sent");
-})
-app.delete("/admin/deletedata",(req,res,next)=>{
-    res.send("admin data deleted");
-})
-
 app.get("/user",(req,res,next)=>{
-    res.send("user into login page")
+    try{
+     throw new Error("404 not forund");
+    res. send("user details");
+    }
+    catch(err){
+      res.status(404).send("from catch error")
+    }
+    
+})
+
+app.use("/",(err,req,res,next)=>{
+    if(err){
+    res.status(404).send("Something went wrong...")
+    }
 })
 
 
-app.use("/user",userAuth)
-app.get("/user/details",(req,res,next)=>{
-    res.send("user details fetched");
-})
 
 
 
