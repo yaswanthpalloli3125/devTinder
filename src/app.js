@@ -65,6 +65,15 @@ app.get("/userprofile",userAuth, async (req, res) => {
   }
 });
 
+app.post("/connectionrequest",userAuth, async(req,res)=>{
+    
+  try {
+    res.send("connection sent successfully")
+  } catch (error) {
+    res.status(400).send("ERROR "+ error.message)
+  }
+})
+
 app.get("/userdetails", async (req, res) => {
   const userAge = req.body.age;
   try {

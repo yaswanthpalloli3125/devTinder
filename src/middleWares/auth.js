@@ -14,7 +14,7 @@ const userAuth = async (req,res,next)=>{
        if(!id){
           throw new Error("user not found")
        }
-       console.log(user)
+  
        req.user = user;
        next();
 
