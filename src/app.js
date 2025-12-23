@@ -17,19 +17,7 @@ app.use("/",profileRouter);
 
 app.use("/",connectionRouter);
 
-app.get("/userdetails", async (req, res) => {
-  const userAge = req.body.age;
-  try {
-    const users = await User.find({ age: userAge });
-    if (users.length === 0) {
-      res.status(404).send("user not found");
-    } else {
-      res.send(users);
-    }
-  } catch (err) {
-    res.status(400).send("something went wrong");
-  }
-});
+
 
 app.delete("/userdelete", async (req, res) => {
   const userId = req.body.userId;
@@ -45,28 +33,7 @@ app.delete("/userdelete", async (req, res) => {
   }
 });
 
-app.patch("/userupdate/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const data = req.body;
-  try {
-    const allowedDataToUpdate = ["age", "gender", "photoUrl"];
-    const isUpdateAllowed = Object.keys(data).every((k) =>
-      allowedDataToUpdate.includes(k)
-    );
-    console.log("1");
-    if (!isUpdateAllowed) {
-      throw new Error("update is not possible for some fileds");
-    } else {
-      await User.findByIdAndUpdate(userId, data, {
-        runValidators: true,
-      });
 
-      res.send("user updated");
-    }
-  } catch (error) {
-    res.status(400).send("something went wrong " + error.message);
-  }
-});
 
 connectDB()
   .then(() => {
