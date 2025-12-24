@@ -17,10 +17,10 @@ connectionRouter.post("/connectionrequest/:status/:touserid",userAuth, async(req
     if(!isStatusValid){
        return res.status(400).json({message:"invalid status type " + status})
     }
-    /* if(fromUserID.equals(toUserID)){
+     if(fromUserID.equals(toUserID)){
           
           return res.status(404).json({message:"you cannot send request to yourself"})
-        } */
+        } 
 
     const toUser = await User.findById(toUserID);
     if(!toUser){
@@ -56,5 +56,42 @@ connectionRouter.post("/connectionrequest/:status/:touserid",userAuth, async(req
     res.status(400).send("ERROR "+ error.message)
   }
 })
+
+connectionRouter.post("/connectionrequest/review/:status/:requestid",userAuth, async (req,res)=>{
+    try {
+      const loggedInUser= req.user;
+      const {status,requestid} = req.params;
+      const validStatus = ["accepted","rejected"];
+      const isValidStatus = validStatus.includes(status);
+
+      if(!isValidStatus){
+       return res.status(400).json({message:"invalid status type"});
+      }
+
+      const connectionRequest = await ConnectionRequest.findOne({
+        _id:requestid,
+        toUserID: loggedInUser._id,
+        status: "interested"
+     
+
+      })
+      if(!connectionRequest){
+        return res.status(401).json({message:"request not found"})
+      }
+
+      connectionRequest.status = status;
+
+      const data = await connectionRequest.save();
+
+      res.status(200).json({message:"connection request "+ status},data);
+      
+    } catch (error) {
+      res.status(400).send("ERROR " + error.message)
+    }
+})
+
+
+
+
 
 module.exports = connectionRouter;

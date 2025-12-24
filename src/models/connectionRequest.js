@@ -5,15 +5,17 @@ const connectionRequestSchema = new mongoose.Schema({
     fromUserID:{
         type: mongoose.Schema.Types.ObjectId,
         require:true,
+        ref:"user"
     },
     toUserID:{
         type:mongoose.Schema.Types.ObjectId,
         require:true,
+        ref:"user"
     },
     status:{
         type:String,
         enum:{
-            values:["interested","ignored","pending","accepted"],
+            values:["interested","ignored","rejected","accepted","pending"],
             message:`{VALUE} is not valid status`,
         }
     }
@@ -23,7 +25,7 @@ const connectionRequestSchema = new mongoose.Schema({
 
 connectionRequestSchema.index({fromUserID:1,toUserID:1})  //1 ascending -1 descending
 
-connectionRequestSchema.pre("save",function(next){
+/* connectionRequestSchema.pre("save",function(next){
    const connectionRequest = this;
   if(connectionRequest.fromUserID.equals(connectionRequest.toUserID)){
           
@@ -32,7 +34,7 @@ connectionRequestSchema.pre("save",function(next){
 
     next();
    
-})
+}) */
 
 const ConnectionRequestModel = new mongoose.model("connectionRequestModel", connectionRequestSchema);
 

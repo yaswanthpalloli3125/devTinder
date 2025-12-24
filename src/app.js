@@ -4,7 +4,8 @@ const { User } = require("./models/user");
 const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/authrouter");
 const profileRouter = require("./routes/profileRouter");
-const connectionRouter = require("./routes/connectionRouter")
+const connectionRouter = require("./routes/connectionRouter");
+const userRouter = require("./routes/userRouter");
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use("/",authRouter);
 app.use("/",profileRouter);
 
 app.use("/",connectionRouter);
+
+app.use("/",userRouter);
 
 
 
