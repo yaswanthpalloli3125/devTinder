@@ -21,7 +21,7 @@ userRouter.get("/user/connections/received",userAuth,async (req,res)=>{
         if(pendingRequests.length===0){
             return res.json({message:"no pending requests"})
         }
-        res.send(pendingRequests);
+        res.json({data:pendingRequests});
     } catch (error) {
         res.status(400).send("ERROR "+ error.message)
     }
@@ -41,7 +41,7 @@ userRouter.get("/user/connections",userAuth,async (req,res)=>{
             return row.fromUserID;
          });
 
-         res.json(data);
+         res.json({data:data});
     } catch (error) {
         res.status(400).send("ERROR "+ error.message);
     }
@@ -71,7 +71,7 @@ userRouter.get("/feed",userAuth,async(req,res)=>{
            $and:[{_id: {$nin: Array.from(hideUsersList)}},{_id:{$ne:loggedInUser._id}}]
         }).select(USER_SAFE_DATA).skip(skip).limit(limit);
 
-           res.send(feedList)
+           res.json({data:feedList})
         
     } catch (error) {
          res.status(400).send("ERROR "+ error.message);
