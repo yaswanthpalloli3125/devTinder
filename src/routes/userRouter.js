@@ -4,7 +4,7 @@ const userRouter = express.Router();
 const ConnectionRequest = require("../models/connectionRequest");
 const { User } = require("../models/user");
  
-const USER_SAFE_DATA = "firstName lastName age gender"
+const USER_SAFE_DATA = "firstName lastName age gender photoUrl about"
 
 userRouter.get("/user/connections/received",userAuth,async (req,res)=>{
     try {
@@ -30,6 +30,7 @@ userRouter.get("/user/connections/received",userAuth,async (req,res)=>{
 userRouter.get("/user/connections",userAuth,async (req,res)=>{
     try {
          const loggedInUser = req.user;
+         const token = req.token;
          const connections = await ConnectionRequest.find({
             $or:[{fromUserID: loggedInUser._id,status:"accepted"},{toUserID: loggedInUser._id,status:"accepted"}]
          }).populate("fromUserID",USER_SAFE_DATA).populate("toUserID",USER_SAFE_DATA);

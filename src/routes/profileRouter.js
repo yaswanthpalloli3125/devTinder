@@ -27,7 +27,7 @@ profileRouter.patch("/userupdate",userAuth, async (req, res) => {
       loggedInUser[key]=requestingToUpdateData[key]
     );
       await loggedInUser.save();
-      res.send("user updated");
+      res.json({message:"user updated",data:loggedInUser});
     }
    catch (error) {
     res.status(400).send("something went wrong " + error.message);

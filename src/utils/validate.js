@@ -14,7 +14,7 @@ const validateData = (data) => {
 const validateEditRequest = (req)=>{
     if (Object.keys(req).length === 0) return false; // Reject empty updates
     
-    const allowedDataToUpdate = ["age", "gender", "photoUrl"];
+    const allowedDataToUpdate = ["age", "gender", "photoUrl","address","about","firstName","lastName"];
     return Object.keys(req).every(field => allowedDataToUpdate.includes(field));
 }
 

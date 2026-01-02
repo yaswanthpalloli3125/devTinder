@@ -51,13 +51,20 @@ const userSchema = new mongoose.Schema({
     },
     photoUrl:{
         type:String,
-        default:"https://pixabay.com/images/search/user%20icon/",
+        default:"https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
         validate(value){
             const validUrl = validator.isURL(value);
             if(!validUrl){
                 throw new Error("photo url is not valid")
             }
         }
+    },
+    about:{
+        type:String,
+        default:"YouTuber on gaming content who is passionate for to explore the new things"
+    },
+    address:{
+        type:String,
     }
 }, {timestamps: true})
 

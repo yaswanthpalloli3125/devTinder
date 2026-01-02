@@ -3,12 +3,14 @@ const { User } = require("../models/user");
 
 const userAuth = async (req,res,next)=>{
    try {
-       const {token}=req.cookies;
 
+
+       const {token}=req.cookies;
+       console.log(token);
        if(!token){
-         throw new Error("Invalid Token")
+        return res.status(401).send("Invalid Token please login"+token)
        }
-       const tokenObj = await jwt.verify(token,"devtinder@123");
+       const tokenObj =  await jwt.verify(token, "devtinder@123");
       
        const {id}=tokenObj;
        const user = await User.findById(id);
