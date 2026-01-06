@@ -1,5 +1,4 @@
 const validator = require("validator");
-
 const validateData = (data) => {
   const { firstName, lastName, password, email } = data;
   if (!firstName || !lastName) {
