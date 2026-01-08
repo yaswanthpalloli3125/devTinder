@@ -3,6 +3,7 @@ const connectionRouter  = express.Router();
 const {userAuth} = require("../middleWares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const { User } = require("../models/user");
+const sendEmail = require("../utils/sendEmail");
 
 connectionRouter.post("/connectionrequest/:status/:touserid",userAuth, async(req,res)=>{
     
@@ -47,9 +48,13 @@ connectionRouter.post("/connectionrequest/:status/:touserid",userAuth, async(req
 
      const data = await newConnectionRequest.save();
 
+     const emailRes = await sendEmail.run();
+     console.log(emailRes);
+
     res.json({
       message:"connection sent successfuly",
-      data
+      data,
+      emailRes
     })
      
   } catch (error) {
