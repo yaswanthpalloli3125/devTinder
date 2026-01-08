@@ -77,7 +77,7 @@ userSchema.methods.passwordValidation = async function(userProvidedPassword){
 
 userSchema.methods.getToken = async function(){
      const user = this;
-     const token = await jwt.sign({id:user.id},"devtinder@123",{expiresIn:"7d"});
+     const token = await jwt.sign({id:user.id},process.env.JWT_SECRET,{expiresIn:"7d"});
      return token;
 }
 

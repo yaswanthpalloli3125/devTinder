@@ -8,6 +8,8 @@ const connectionRouter = require("./routes/connectionRouter");
 const userRouter = require("./routes/userRouter");
 const cors = require("cors")
 
+require('dotenv').config();
+
 const app = express();
 app.use(cors({
   origin:"http://localhost:5173",
@@ -45,8 +47,11 @@ app.delete("/userdelete", async (req, res) => {
 connectDB()
   .then(() => {
     console.log("connection established to database");
-    app.listen(7777, () => {
+    app.listen(process.env.PORT, () => {
+      
       console.log("server is running on port 7777");
     });
   })
-  .catch((err) => console.log("connection cannot established to database"));
+  .catch((err) => {
+  
+    console.log("connection cannot established to database")});
