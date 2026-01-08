@@ -48,11 +48,11 @@ connectionRouter.post("/connectionrequest/:status/:touserid",userAuth, async(req
 
      const data = await newConnectionRequest.save();
 
-     const emailRes = await sendEmail.run();
+     const emailRes = await sendEmail.run(`A new friend request from ${req.user.firstName}`,`${req.user.firstName} is ${status} ${toUser.firstName}`);
      console.log(emailRes);
 
     res.json({
-      message:"connection sent successfuly",
+      message:`${req.user.firstName} is ${status} ${toUser.firstName}`,
       data,
       emailRes
     })
